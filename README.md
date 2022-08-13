@@ -10,3 +10,29 @@ Finally SFC will be run to check.
 
 This is a last ditch effort in case just running SFC/SCANNOW by itself doesn't fix the problem.  I have found that this will
 usually fix most problems.
+
+Run CheckDisk on C:\ drive, fix errors, shows each file, recovers bad sectors, and clear bad sector table and scan whole disk
+
+```
+CHKDSK C: /f /v /r /b
+```
+Will most likely need to reboot after issuing this command
+
+
+Now check the local install image for any errors, and repair them
+
+```
+DISM.EXE /Online /Cleanup-Image /AnalyzeComponentStore
+DISM.EXE /Online /Cleanup-Image /StartComponentCleanup
+DISM.EXE /Online /Cleanup-Image /ScanHealth
+DISM.EXE /Online /Cleanup-Image /CheckHealth
+DISM.EXE /Online /Cleanup-Image /RestoreHealth
+```
+
+Finally, run SFC and scan
+
+```
+SFC /SCANNOW
+```
+
+Reboot.
